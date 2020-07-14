@@ -57,20 +57,7 @@ public class PolicyHandler{
             System.out.println("##### listener Notify : " + delivered.toJson());
         }
     }
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverDeliveryCanceled_Notify(@Payload DeliveryCanceled deliveryCanceled){
 
-        if(deliveryCanceled.isMe()){
-            System.out.println("##### listener Notify : " + deliveryCanceled.toJson());
-        }
-    }
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverOrdered_Notify(@Payload Ordered ordered){
-
-        if(ordered.isMe()){
-            System.out.println("##### listener Notify : " + ordered.toJson());
-        }
-    }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverOrderCanceled_Notify(@Payload OrderCanceled orderCanceled){
 
