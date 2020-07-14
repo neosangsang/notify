@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    _PROJECT_NAME: "teamc-notify"
+    _PROJECT_NAME: "teamc-notify1"
 
 phases:
   install:
@@ -93,6 +93,7 @@ phases:
                     periodSeconds: 5
                     failureThreshold: 5
         EOF
+
 cache:
   paths:
     - '/root/.m2/**/*'
