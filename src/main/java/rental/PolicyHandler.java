@@ -35,11 +35,11 @@ public class PolicyHandler{
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
-        String message = "##### 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId();
+        String message = "Kakao : 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId();
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(ordered.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("##### 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId());
+            //System.out.println("Kakao : 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
@@ -50,11 +50,11 @@ public class PolicyHandler{
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "##### 점검이 완료되었습니다. 주문번호 : \" + checked.getOrderId() + \", 점검일자 : \" + checked.getCheckDate()";
+        String message = "Kakao : 점검이 완료되었습니다. 주문번호 : \" + checked.getOrderId() + \", 점검일자 : \" + checked.getCheckDate()";
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(checked.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("##### 점검이 완료되었습니다. 주문번호 : " + checked.getOrderId() + ", 점검일자 : " + checked.getCheckDate());
+            //System.out.println("Kakao : 점검이 완료되었습니다. 주문번호 : " + checked.getOrderId() + ", 점검일자 : " + checked.getCheckDate());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
@@ -64,11 +64,11 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "##### 점검일정이 확정되었습니다. 주문번호 : " + scheduleFixed.getOrderId() + ", 점검일자 : " + scheduleFixed.getCheckDate();
+        String message = "Kakao : 점검일정이 확정되었습니다. 주문번호 : " + scheduleFixed.getOrderId() + ", 점검일자 : " + scheduleFixed.getCheckDate();
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(scheduleFixed.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("##### 점검일정이 확정되었습니다. 주문번호 : " + scheduleFixed.getOrderId() + ", 점검일자 : " + scheduleFixed.getCheckDate());
+            //System.out.println("Kakao : 점검일정이 확정되었습니다. 주문번호 : " + scheduleFixed.getOrderId() + ", 점검일자 : " + scheduleFixed.getCheckDate());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
@@ -78,11 +78,11 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "##### 결제가 완료되었습니다. 주문번호 : " + paid.getOrderId() + ", 결제금액 : " + paid.getRentalPrice();
+        String message = "Kakao : 결제가 완료되었습니다. 주문번호 : " + paid.getOrderId() + ", 결제금액 : " + paid.getRentalPrice();
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(paid.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("##### 결제가 완료되었습니다. 주문번호 : " + paid.getOrderId() + ", 결제금액 : " + paid.getRentalPrice());
+            //System.out.println("Kakao : 결제가 완료되었습니다. 주문번호 : " + paid.getOrderId() + ", 결제금액 : " + paid.getRentalPrice());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
@@ -92,11 +92,11 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "##### 결제가 취소되었습니다. 주문번호 : " + payCanceled.getOrderId();
+        String message = "Kakao : 결제가 취소되었습니다. 주문번호 : " + payCanceled.getOrderId();
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(payCanceled.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("##### 결제가 취소되었습니다. 주문번호 : " + payCanceled.getOrderId());
+            //System.out.println("Kakao : 결제가 취소되었습니다. 주문번호 : " + payCanceled.getOrderId());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
@@ -106,11 +106,11 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "##### 배송이 완료되었습니다. 주문번호 : " + delivered.getOrderId();
+        String message = "Kakao : 배송이 완료되었습니다. 주문번호 : " + delivered.getOrderId();
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(delivered.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("##### 배송이 완료되었습니다. 주문번호 : " + delivered.getOrderId());
+            //System.out.println("Kakao : 배송이 완료되었습니다. 주문번호 : " + delivered.getOrderId());
         }
     }
 
@@ -121,11 +121,11 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "##### 주문이 취소되었습니다. 주문번호 : " + orderCanceled.getId() + ", 상품번호 : " + orderCanceled.getProductId();
+        String message = "Kakao : 주문이 취소되었습니다. 주문번호 : " + orderCanceled.getId() + ", 상품번호 : " + orderCanceled.getProductId();
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(orderCanceled.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("##### 주문이 취소되었습니다. 주문번호 : " + orderCanceled.getId() + ", 상품번호 : " + orderCanceled.getProductId());
+            //System.out.println("Kakao : 주문이 취소되었습니다. 주문번호 : " + orderCanceled.getId() + ", 상품번호 : " + orderCanceled.getProductId());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
@@ -135,11 +135,11 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "##### 배송이 취소되었습니다. 주문번호 : " + deliveryCanceled.getOrderId();
+        String message = "Kakao : 배송이 취소되었습니다. 주문번호 : " + deliveryCanceled.getOrderId();
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(deliveryCanceled.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("##### 배송이 취소되었습니다. 주문번호 : " + deliveryCanceled.getOrderId());
+            //System.out.println("Kakao : 배송이 취소되었습니다. 주문번호 : " + deliveryCanceled.getOrderId());
         }
     }
 
