@@ -1,5 +1,10 @@
 package rental;
 
+
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
 import rental.config.kafka.KafkaProcessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,18 +13,33 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+import java.util.Properties;
+
+
 @Service
 public class PolicyHandler{
+    private static final String TOPIC_NAME = "rental";
     @StreamListener(KafkaProcessor.INPUT)
     public void onStringEventListener(@Payload String eventString){
 
     }
 
+
+
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverOrdered_Notify(@Payload Ordered ordered){
+        Properties props = new Properties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.100.74.200:9092");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
+        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
+
+        String message = "##### 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId();
+        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(ordered.isMe()){
-            System.out.println("##### 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId());
+            producer.send(record,((recordMetadata, e) -> {}));
+            //System.out.println("##### 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
