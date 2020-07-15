@@ -51,7 +51,7 @@ public class PolicyHandler{
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "{'eventType': 'Notification', 'message' : '점검이 완료되었습니다. 주문번호 : " + checked.getId() + ", 점검일자: " + checked.getCheckDate()+ "'}";
+        String message = "{'eventType': 'Notification', 'message' : '점검이 완료되었습니다. 주문번호 : " + checked.getOrderId() + ", 점검일자: " + checked.getCheckDate()+ "'}";
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(checked.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
@@ -79,7 +79,7 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "{'eventType': 'Notification', 'message' : '결제가 완료되었습니다. 주문번호 : " + paid.getId() + ", 결제금액: " + paid.getRentalPrice()+ "'}";
+        String message = "{'eventType': 'Notification', 'message' : '결제가 완료되었습니다. 주문번호 : " + paid.getOrderId() + ", 결제금액: " + paid.getRentalPrice()+ "'}";
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(paid.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
@@ -93,7 +93,7 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "{'eventType': 'Notification', 'message' : '결제가 취소되었습니다. 주문번호 : " + payCanceled.getId() + "'}";
+        String message = "{'eventType': 'Notification', 'message' : '결제가 취소되었습니다. 주문번호 : " + payCanceled.getOrderId() + "'}";
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(payCanceled.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
@@ -107,7 +107,7 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "{'eventType': 'Notification', 'message' : '배송이 완료되었습니다. 주문번호 : " + delivered.getId() + "'}";
+        String message = "{'eventType': 'Notification', 'message' : '배송이 완료되었습니다. 주문번호 : " + delivered.getOrderId() + "'}";
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(delivered.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
@@ -136,7 +136,7 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "{'eventType': 'Notification', 'message' : '배송이 취소되었습니다. 주문번호 : " + deliveryCanceled.getId() + "'}";
+        String message = "{'eventType': 'Notification', 'message' : '배송이 취소되었습니다. 주문번호 : " + deliveryCanceled.getOrderId() + "'}";
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(deliveryCanceled.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
