@@ -19,127 +19,87 @@ import java.util.Properties;
 
 @Service
 public class PolicyHandler{
+    @Autowired NotifyRepository notifyRepository;
     private static final String TOPIC_NAME = "rental";
     @StreamListener(KafkaProcessor.INPUT)
     public void onStringEventListener(@Payload String eventString){
 
     }
-
+    Message message = new Message();
 
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverOrdered_Notify(@Payload Ordered ordered){
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.100.74.200:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
-        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
-        String message = '{"eventType": "Notification", "message" : "주문이 완료되었습니다. 주문번호 : ' + ordered.getId() + ', 상품번호 : ' + ordered.getProductId()+ '"}';
-        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
+
         if(ordered.isMe()){
-            producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("Kakao : 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId());
+            message.setMessage( "주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId() );
+            notifyRepository.save(message);
+
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverChecked_Notify(@Payload Checked checked) {
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.100.74.200:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
-        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = '{"eventType": "Notification", "message" : "점검이 완료되었습니다. 주문번호 : ' + checked.getOrderId() + ', 점검일자: ' + checked.getCheckDate()+ '"}';
-        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
+
+
         if(checked.isMe()){
-            producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("Kakao : 점검이 완료되었습니다. 주문번호 : " + checked.getOrderId() + ", 점검일자 : " + checked.getCheckDate());
+            message.setMessage("점검이 완료되었습니다. 주문번호 : " + checked.getOrderId() + ", 점검일자: " + checked.getCheckDate());
+            notifyRepository.save(message);
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverScheduleFixed_Notify(@Payload ScheduleFixed scheduleFixed){
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.100.74.200:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = '{"eventType": "Notification", "message" : "점검일정이 확정되었습니다. 주문번호 : ' + scheduleFixed.getOrderId() + ', 점검일자 : ' + scheduleFixed.getCheckDate()+ '"}';
-        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
+
         if(scheduleFixed.isMe()){
-            producer.send(record,((recordMetadata, e) -> {}));
+            message.setMessage("점검일정이 확정되었습니다. 주문번호 : " + scheduleFixed.getOrderId() + ", 점검일자: " + scheduleFixed.getCheckDate());
+            notifyRepository.save(message);
             //System.out.println("Kakao : 점검일정이 확정되었습니다. 주문번호 : " + scheduleFixed.getOrderId() + ", 점검일자 : " + scheduleFixed.getCheckDate());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPaid_Notify(@Payload Paid paid){
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.100.74.200:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = '{"eventType": "Notification", "message" : "결제가 완료되었습니다. 주문번호 : ' + paid.getOrderId() + ', 결제금액: ' + paid.getRentalPrice()+ '"}';
-        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
+
         if(paid.isMe()){
-            producer.send(record,((recordMetadata, e) -> {}));
+            message.setMessage("결제가 완료되었습니다. 주문번호 : " + paid.getOrderId() + ", 결제금액: " + paid.getRentalPrice());
+            notifyRepository.save(message);
             //System.out.println("Kakao : 결제가 완료되었습니다. 주문번호 : " + paid.getOrderId() + ", 결제금액 : " + paid.getRentalPrice());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPayCanceled_Notify(@Payload PayCanceled payCanceled){
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.100.74.200:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = '{"eventType": "Notification", "message" : "결제가 취소되었습니다. 주문번호 : ' + payCanceled.getOrderId() + '"}';
-        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
+
         if(payCanceled.isMe()){
-            producer.send(record,((recordMetadata, e) -> {}));
+            message.setMessage("결제가 취소되었습니다. 주문번호 : " + payCanceled.getOrderId());
+            notifyRepository.save(message);
             //System.out.println("Kakao : 결제가 취소되었습니다. 주문번호 : " + payCanceled.getOrderId());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverDelivered_Notify(@Payload Delivered delivered){
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.100.74.200:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = '{"eventType": "Notification", "message" : "배송이 완료되었습니다. 주문번호 : ' + delivered.getOrderId() + '"}';
-        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
+
         if(delivered.isMe()){
-            producer.send(record,((recordMetadata, e) -> {}));
-            //System.out.println("Kakao : 배송이 완료되었습니다. 주문번호 : " + delivered.getOrderId());
+            message.setMessage("배송이 완료되었습니다. 주문번호 : " + delivered.getOrderId() );
+            notifyRepository.save(message);
         }
     }
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverOrderCanceled_Notify(@Payload OrderCanceled orderCanceled){
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.100.74.200:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = '{"eventType": "Notification", "message" : "주문이 취소되었습니다. 주문번호 : ' + orderCanceled.getId() +'상품번호 : '+ orderCanceled.getProductId() +'"}';
-        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
+
         if(orderCanceled.isMe()){
-            producer.send(record,((recordMetadata, e) -> {}));
+            message.setMessage("주문이 취소되었습니다. 주문번호 : " + orderCanceled.getId() + ", 상품번호: " + orderCanceled.getProductId());
+            notifyRepository.save(message);
             //System.out.println("Kakao : 주문이 취소되었습니다. 주문번호 : " + orderCanceled.getId() + ", 상품번호 : " + orderCanceled.getProductId());
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverDeliveryCanceled_Notify(@Payload DeliveryCanceled deliveryCanceled){
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.100.74.200:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = '{"eventType": "Notification", "message" : "배송이 취소되었습니다. 주문번호 : ' + deliveryCanceled.getOrderId() + '"}';
-        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
+
         if(deliveryCanceled.isMe()){
-            producer.send(record,((recordMetadata, e) -> {}));
+            message.setMessage("배송이 취소되었습니다. 주문번호 : " + deliveryCanceled.getOrderId() );
+            notifyRepository.save(message);
             //System.out.println("Kakao : 배송이 취소되었습니다. 주문번호 : " + deliveryCanceled.getOrderId());
         }
     }
