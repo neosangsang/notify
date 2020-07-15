@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    _PROJECT_NAME: "teamc-notify1"
+    _PROJECT_NAME: "admin06-sk-notify"
 
 phases:
   install:
