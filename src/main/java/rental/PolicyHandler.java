@@ -35,7 +35,7 @@ public class PolicyHandler{
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
-        String message = "Kakao : 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId();
+        String message = String message = "{'eventType': 'Notification', 'message' : '주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId()+ "}";
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(ordered.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
