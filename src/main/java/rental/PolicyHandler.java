@@ -19,14 +19,12 @@ import java.util.Properties;
 
 @Service
 public class PolicyHandler{
-    private static final String TOPIC_NAME = "rental1";
+    private static final String TOPIC_NAME = "rental2";
     private String KAFKA_ADDRESS = "10.100.124.114:9092";
     @StreamListener(KafkaProcessor.INPUT)
     public void onStringEventListener(@Payload String eventString){
 
     }
-
-
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverOrdered_Notify(@Payload Ordered ordered){
