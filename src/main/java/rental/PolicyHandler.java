@@ -30,6 +30,7 @@ public class PolicyHandler{
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverOrdered_Notify(@Payload Ordered ordered){
+        /*
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_ADDRESS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -43,9 +44,11 @@ public class PolicyHandler{
             producer.send(record,((recordMetadata, e) -> {}));
             //System.out.println("Kakao : 주문이 완료되었습니다. 주문번호 : " + ordered.getId() + ", 상품번호 : " + ordered.getProductId());
         }
+         */
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverChecked_Notify(@Payload Checked checked) {
+/*
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_ADDRESS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -58,9 +61,12 @@ public class PolicyHandler{
             producer.send(record,((recordMetadata, e) -> {}));
             //System.out.println("Kakao : 점검이 완료되었습니다. 주문번호 : " + checked.getOrderId() + ", 점검일자 : " + checked.getCheckDate());
         }
+
+ */
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverScheduleFixed_Notify(@Payload ScheduleFixed scheduleFixed){
+/*
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_ADDRESS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -72,9 +78,12 @@ public class PolicyHandler{
             producer.send(record,((recordMetadata, e) -> {}));
             //System.out.println("Kakao : 점검일정이 확정되었습니다. 주문번호 : " + scheduleFixed.getOrderId() + ", 점검일자 : " + scheduleFixed.getCheckDate());
         }
+
+ */
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPaid_Notify(@Payload Paid paid){
+/*
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_ADDRESS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -86,9 +95,12 @@ public class PolicyHandler{
             producer.send(record,((recordMetadata, e) -> {}));
             //System.out.println("Kakao : 결제가 완료되었습니다. 주문번호 : " + paid.getOrderId() + ", 결제금액 : " + paid.getRentalPrice());
         }
+
+ */
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPayCanceled_Notify(@Payload PayCanceled payCanceled){
+/*
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_ADDRESS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -100,9 +112,12 @@ public class PolicyHandler{
             producer.send(record,((recordMetadata, e) -> {}));
             //System.out.println("Kakao : 결제가 취소되었습니다. 주문번호 : " + payCanceled.getOrderId());
         }
+
+ */
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverDelivered_Notify(@Payload Delivered delivered){
+        /*
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_ADDRESS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -114,10 +129,13 @@ public class PolicyHandler{
             producer.send(record,((recordMetadata, e) -> {}));
             //System.out.println("Kakao : 배송이 완료되었습니다. 주문번호 : " + delivered.getOrderId());
         }
+
+         */
     }
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverOrderCanceled_Notify(@Payload OrderCanceled orderCanceled){
+        /*
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_ADDRESS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -129,9 +147,12 @@ public class PolicyHandler{
             producer.send(record,((recordMetadata, e) -> {}));
             //System.out.println("Kakao : 주문이 취소되었습니다. 주문번호 : " + orderCanceled.getId() + ", 상품번호 : " + orderCanceled.getProductId());
         }
+
+         */
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverDeliveryCanceled_Notify(@Payload DeliveryCanceled deliveryCanceled){
+        /*
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_ADDRESS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -143,9 +164,12 @@ public class PolicyHandler{
             producer.send(record,((recordMetadata, e) -> {}));
             //System.out.println("Kakao : 배송이 취소되었습니다. 주문번호 : " + deliveryCanceled.getOrderId());
         }
+
+         */
     }
      @StreamListener(KafkaProcessor.INPUT)
     public void wheneverAssigned_Notify(@Payload Assigned assigned){
+        /*
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_ADDRESS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -156,6 +180,8 @@ public class PolicyHandler{
         if(assigned.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
         }
+
+         */
     }
 
 }
