@@ -151,7 +151,7 @@ public class PolicyHandler{
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        String message = "{'eventType': 'Notification', 'message' : '점검일정이 배정 되었습니다. 주문번호 : " + assigned.getOrderId() + "배정일 : "+ assigned.getCheckDate() +"'}";
+        String message = "{'eventType': 'Notification', 'message' : '" + assigned.getUserId() + "님 점검일정이 배정 되었습니다. 주문번호 : " + assigned.getOrderId() + ", 배정일 : "+ assigned.getCheckDate() +"'}";
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
         if(assigned.isMe()){
             producer.send(record,((recordMetadata, e) -> {}));
